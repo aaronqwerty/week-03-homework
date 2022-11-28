@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/aaron.css" />
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    
+  </head>
+  
+  <body onload="onLoad()" onchange="onChange()">
+    <div class="wrapper">
+      <header>
+        <h1>Password Generator</h1>
+      </header>
+      <div class="card">
+        
+        
+        <div class="card-body tooltip">
+          <textarea 
+            onclick="copyPassword()"
+            readonly
+            id="password"
+            placeholder="Your Password Will Display Here"
+          ></textarea>
+          <span class="tooltiptext">Click Text to Copy</span>
+        </div>
+
+        <div class="card-conditions slidecontainer">
+
+        <div id="sectionform" class="grid-container">
+            
+            <label class="grid-item"><p>Password Length</p></label>
+            <div class="grid-item"><input onchange="getpwlength()" type="range" min="8" max="128" value="12" class="sliderlength" id="includeLength"></div>
+            <div class="grid-item pwlength"><p id="pwlength"></p></div>
+        
+            <label class="grid-item">Include Uppercase</label>
+            <div>
+            <input onchange="changecheck(!checked)" id="includeUpper" type="checkbox" checked>
+            </div>  
+            <div class="block"></div>
+
+            <label class="grid-item">Include Lowercase</label>
+            <div>
+            <input onchange="changecheck(!checked)" id="includeLower" type="checkbox" checked>
+            </div>
+            <div class="block"></div>
+
+            <label class="grid-item">Include Numbers</label>
+            <div>
+            <input onchange="changecheck(!checked)" id="includeNumbers" type="checkbox" checked>
+            </div>
+            <div class="block"></div>
+
+            <label class="grid-item">Include Special Characters</label>
+            <div>
+            <input onchange="changecheck(!checked)" id="includeSymbols" type="checkbox" checked>
+            </div>
+            <div class="block"></div>
+
+            
+          </div>
+
+
+        </div>
+        
+        <div class="card-footer">
+          <button onclick="generatePassword()" id="generate" class="btn">Generate Password</button>
+        </div>
+      </div>
+    </div>
+    <script src="./assets/script.js"></script>    
+    <section class="aaron">
+      <img id="aaron-image" src="./assets/images/Aaron.png" alt="Cartoon image of Aaron Raikes">
+      <span class="aarontext">Thanks for checking out my Password Generator. I hope you find it userful.
+      </span>
+  </section>
+  </body>
+</html>
