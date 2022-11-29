@@ -1,6 +1,6 @@
 :root {
   --button: blue;
-  --upper: red;
+  --upper: #ff0000;
   --lower: green;
   --numbers: orange;
   --symbols: magenta;

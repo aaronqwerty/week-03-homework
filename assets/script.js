@@ -20,12 +20,6 @@ generateBtn.addEventListener("click", function(event){
   }
 );
 
-function getpwlength() {
-    var x = document.getElementById("includeLength").value;
-    document.getElementById("pwlength").innerHTML = x;
-    pwLength = x
-}
-
 function onLoad() {
   getpwlength();
 }
@@ -34,16 +28,21 @@ function onChange() {
   getpwlength();
   generatePassword();
   writePassword();
-  
 }
-// How to ensure at least one tick box is selected
+
+function getpwlength() {
+  var x = document.getElementById("includeLength").value;
+  document.getElementById("pwlength").innerHTML = x;
+  pwLength = x
+}
+
+// Ensure at least one tick box is selected
 function changecheck(checked) {
   
-  var checkboxcount = document.querySelectorAll('input[type="checkbox"]:checked').length
+    var checkboxcount = document.querySelectorAll('input[type="checkbox"]:checked').length;
     if (checkboxcount < 1) {
+      window.alert("Warning: At least one option is required!\nThe form will be reset.");
       location.reload();
-    } else if (checkboxcount < 2) {
-      window.alert("Reminder: At least one option is required");
     } else
       {  
       if (checked) {
@@ -54,55 +53,84 @@ function changecheck(checked) {
 }
 }
 
+// Included Password Variables.
+
 function generatePassword() {
   var userPassword = [];
   
+  //UPPER
   if (upper.checked) {
     var upperCaseArray = [];
     upperCaseArray = allowedUpper.split("");
+    var upperPwd = upperCaseArray[Math.floor(Math.random() * upperCaseArray.length)];
+    //console.log(`upper letter is; ${upperPwd}`)
     } else {
     var upperCaseArray = [];
+    var upperPwd = [];
   }
 
+  //LOWER
   if (lower.checked) {
     var lowerCaseArray = [];
     lowerCaseArray = allowedLower.split("");
+    var lowerPwd = lowerCaseArray[Math.floor(Math.random() * lowerCaseArray.length)];
+    //console.log(`upper letter is; ${lowerPwd}`)
     } else {
     var lowerCaseArray = [];
+    var lowerPwd = [];
   }
 
+  //NUMBERS
   if (nums.checked) {
     var numberCaseArray = [];
     numberCaseArray = allowedNumbers.split("");
+    var numberPwd = numberCaseArray[Math.floor(Math.random() * numberCaseArray.length)];
+    //console.log(`number is; ${numberPwd}`)
     } else {
     var numberCaseArray = [];
+    var numberPwd = [];
   }
 
+  //SYMBOLS
   if (symb.checked) {
     var symbolCaseArray = [];
     symbolCaseArray = allowedSymbols.split("");
+    var symbolPwd = symbolCaseArray[Math.floor(Math.random() * symbolCaseArray.length)];
+    //console.log(`symbol is; ${symbolPwd}`)
     }  else {
     var symbolCaseArray = [];
+    var symbolPwd = [];
   }
   
-  userPasswordChar = upperCaseArray.concat(lowerCaseArray,numberCaseArray,symbolCaseArray);
-  
-  console.log("password characters available are; " + userPasswordChar)
-  console.log("password length is; " + pwLength)
 
-  var randomItem = userPasswordChar[Math.floor(Math.random()*userPasswordChar.length)];
-  
+  //INCLUDE 1 FROM EACH INCLUDED ELEMENT
+  incPwdChar = (upperPwd +lowerPwd + numberPwd + symbolPwd);
+  var concatPwdLength = (pwLength -= incPwdChar.length);
+  //console.log(`this is the 1-4 digit password; ${incPwdChar}`)
+
+  userPasswordChar = upperCaseArray.concat(lowerCaseArray,numberCaseArray,symbolCaseArray);
+
+  console.log("password characters available are; " + userPasswordChar);
+  //console.log("password length is; " + incPwdChar.length + " and " + pwLength);
+      
+  //INCLUDE RANDOM WITH THE REMAINING LENGTH
   createdpassword = "";
 
-  for (var i = 0; i < pwLength; i++) {
+  for (var i = 0; i < concatPwdLength; i++) {
   let pwd = userPasswordChar[Math.floor(Math.random() * userPasswordChar.length)];
 
   createdpassword += pwd;
+  //console.log(`the random password is; ${createdpassword}`);
+
+  finalpassword = incPwdChar.concat(createdpassword);
+  //console.log(`the final password is; ${finalpassword}`);
+
   }
+
 }
 
 function writePassword() {
-  var password = createdpassword;
+  var password = finalpassword;
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
@@ -120,21 +148,5 @@ function copyPassword() {
   document.querySelector('.alert').style.display = "none"
   document.body.removeChild(alert)
   }, 1000)
-  return result;
+  return;
 }
-
-// GIVEN I need a new, secure password ✅
-// WHEN I click the button to generate a password  ✅
-// THEN I am presented with a series of prompts for password criteria ✅
-// WHEN prompted for password criteria ✅
-// THEN I select which criteria to include in the password ✅
-// WHEN prompted for the length of the password  ✅
-// THEN I choose a length of at least 8 characters and no more than 128 characters ✅
-// WHEN asked for character types to include in the password ✅
-// THEN I confirm whether or not to include lowercase ✅, uppercase ✅, numeric ✅, and/or special characters ✅
-// WHEN I answer each prompt ✅
-// THEN my input should be validated and at least one character type should be selected ✅
-// WHEN all prompts are answered ✅
-// THEN a password is generated that matches the selected criteria ✅
-// WHEN the password is generated ✅
-// THEN the password is either displayed in an alert or written to the page ✅
